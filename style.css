@@ -1,0 +1,76 @@
+body{
+background-color:#8F9779;
+
+}
+
+@font-face {
+ 
+	font-family:KGShadowOfTheNight;
+    src:url("./fonts/KGShadowOfTheNight.ttf");
+    font-family:KGShadowOfTheDay;
+    src:url("./fonts/KGShadowOfTheDay.ttf");
+}  
+
+.containers{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+
+#turns{
+	color: whitesmoke;
+	font-family: 'Calculator', sans-serif;
+	font-weight: bold;
+	border-top: 20px solid #8F9779;
+	border-bottom: 20px solid #8F9779;
+	padding: 10px;
+	background:  #8F9779;
+	border-radius: 10px;
+	margin: 0 8px;
+
+ }
+ 
+
+ .turn {
+	font-size: 30px;
+	text-align: right;
+	color: #422800 ;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	height: 10px;
+	font-family:KGShadowOfTheDay;
+    font-size: 2rem;
+	padding-bottom: 1rem;
+	padding-top: 5px;
+ }
+ 
+
+.board {
+  display: grid;
+  height: 500px;
+  width: 500px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  border: 1px solid black;
+  gap: 5px;
+  padding: 2px;
+  background-color: #99aab5;
+  border: 3px solid #99aab5;
+ 
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 3rem;
+  border: 3px solid #99aab5;
+  background: #fbeee0;
+  cursor: pointer;
+  font-family:KGShadowOfTheNight;
+  color:#422800 ;
+}
