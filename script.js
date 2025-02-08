@@ -110,11 +110,31 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     console.log(`${getActivePlayer().name}'s turn.`);
   }
 
+  
+  function playerWins(player) {
+    const gameBoard = board.getBoard();
+    return winMoves.some((threeInARow) =>
+      threeInARow.every((cell) => {
+        const row = parseInt(cell[0], 10);
+        const column = parseInt(cell[1], 10);
+        return gameBoard[row][column].getValue() === player;
+      })
+    );
+  }
+
+  function tie() {
+    if (move === 9) {
+      console.log("It's a tie!");
+      return true;
+    }
+    return false;
+  }
   printNewRound();
 
   return {
     getActivePlayer,
     getBoard: board.getBoard,
+    playerWins,
   };
 }
 
