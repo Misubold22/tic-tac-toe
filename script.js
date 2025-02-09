@@ -129,9 +129,45 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     }
     return false;
   }
+
+  function playRound(row, column) {
+    console.log(
+      `Dropping ${getActivePlayer().name}'s token into row ${row}, column ${column}`
+    );
+
+    // Attempt to drop the token
+    const success = board.dropToken(row, column, getActivePlayer().token);
+
+    if (!success) {
+      console.log("Invalid move! Cell is already occupied.");
+      return false; // Invalid move
+    }
+
+    // Check for a win condition
+    if (playerWins(getActivePlayer().token)) {
+      console.log(`${getActivePlayer().name} wins!`);
+      return true; // Game over
+    }
+
+    // Increment move count on valid move
+    move++;
+
+    // Check for a tie
+    if (tie()) {
+      console.log("It's a tie!");
+      return true; // Game over
+    }
+
+    // Switch player and continue
+    switchPlayerTurn();
+    printNewRound();
+    return false; // Game continues
+  }
+  
   printNewRound();
 
   return {
+    playRound,
     getActivePlayer,
     getBoard: board.getBoard,
     playerWins,
