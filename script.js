@@ -174,5 +174,74 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
   };
 }
 
+function ScreenController() {
+  const game = GameController();
+  const playerTurnDiv = document.querySelector(".turn");
+  const boardDiv = document.querySelector(".board");
+  let gameOver = false;
 
+  document.addEventListener("DOMContentLoaded", function () {
+    gameOver = true;
+    playerTurnDiv.textContent = "";
+  });
+
+  function updateScreen() {
+    boardDiv.textContent = "";
+    const start = document.querySelector(".btn-start");
+    start.addEventListener("click", startClick, false);
+    const board = game.getBoard();
+    const activePlayer = game.getActivePlayer();
+
+    function startClick() {
+      gameOver = false;
+      playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+    }
+
+    if (!gameOver) {
+      playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+    }
+
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        const cellButton = document.createElement("button");
+        cellButton.classList.add("cell");
+        cellButton.dataset.row = rowIndex;
+        cellButton.dataset.column = columnIndex;
+        cellButton.textContent = cell.getValue();
+        boardDiv.appendChild(cellButton);
+      });
+    });
+  }
+
+  document.querySelector(".board").addEventListener("click", (e) => {
+    if (gameOver) return; // Prevent moves after game over
+
+    const selectedRow = parseInt(e.target.dataset.row, 10);
+    const selectedColumn = parseInt(e.target.dataset.column, 10);
+
+    if (isNaN(selectedRow) || isNaN(selectedColumn)) return; // Ignore invalid clicks
+
+    const success = game.playRound(selectedRow, selectedColumn);
+    updateScreen();
+
+    if (success) {
+      gameOver = true;
+      if (game.playerWins(game.getActivePlayer().token)) {
+        playerTurnDiv.textContent = `${game.getActivePlayer().name} wins!`;
+      } else {
+        playerTurnDiv.textContent = "It's a tie!";
+      }
+      
+  }})  
+  
+
+  updateScreen();
+}
+
+ScreenController();
+
+function togglePopup() {
+  const popup = document.getElementById("popupOverlay");
+  popup.classList.toggle("show");
+}
 
